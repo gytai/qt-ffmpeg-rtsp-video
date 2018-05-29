@@ -12,6 +12,10 @@
 #include <QInputDialog>
 #include <QtMath>
 
+#include <QSettings>
+#include <QString>
+#include <QDebug>
+
 #include <QMouseEvent>
 
 videowindow::videowindow(QWidget *parent) :
@@ -24,7 +28,14 @@ videowindow::videowindow(QWidget *parent) :
    setAttribute(Qt::WA_TranslucentBackground);
    setFocusPolicy(Qt::StrongFocus);
 
-   mLocalPlayer = new LocalVideoPlayer;
+   QSettings *configIniRead = new QSettings("config.ini", QSettings::IniFormat);
+   //将读取到的ini文件保存在QString中，先取值，然后通过toString()函数转换成QString类型
+
+   QString videoPath = configIniRead->value("/video/path").toString();
+   //读入入完成后删除指针
+   delete configIniRead;
+
+   mLocalPlayer = new LocalVideoPlayer(videoPath);
    connect(mLocalPlayer,SIGNAL(sig_GetVideoFrame(QImage)),this,SLOT(slotGetVideoFrame(QImage)));
    connect(mLocalPlayer,SIGNAL(sig_VideoFinished()),this,SLOT(slotVideoFinished()));
 

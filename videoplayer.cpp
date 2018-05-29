@@ -11,9 +11,9 @@ extern "C"
 #include <stdio.h>
 #include<iostream>
 using namespace std;
-VideoPlayer::VideoPlayer()
+VideoPlayer::VideoPlayer(QString url)
 {
-
+    rtspUrl = url;
 }
 
 VideoPlayer::~VideoPlayer()
@@ -58,8 +58,9 @@ void VideoPlayer::run()
     char option_value2[]="100";
     av_dict_set(&avdic,option_key2,option_value2,0);
     ///rtsp地址，可根据实际情况修改
-    char url[]="rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
-    //char url[] = "/Users/taiguangyin/Desktop/0.mov";
+
+    QByteArray ba = rtspUrl.toLocal8Bit();
+    char *url = ba.data();
 
     if (avformat_open_input(&pFormatCtx, url, NULL, &avdic) != 0) {
         printf("can't open the file. \n");

@@ -13,7 +13,7 @@ class LocalVideoPlayer : public QThread
     Q_OBJECT
 
 public:
-    explicit LocalVideoPlayer();
+    explicit LocalVideoPlayer(QString path);
     ~LocalVideoPlayer();
 
     void startPlay();

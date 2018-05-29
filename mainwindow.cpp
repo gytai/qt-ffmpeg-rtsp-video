@@ -15,6 +15,10 @@
 #include <QMouseEvent>
 #include <QSettings>
 
+#include <QSettings>
+#include <QString>
+#include <QDebug>
+
 #include<iostream>
 using namespace std;
 
@@ -26,7 +30,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
 //    setWindowFlags(Qt::FramelessWindowHint);
 
-    mPlayer = new VideoPlayer;
+    QSettings *configIniRead = new QSettings("config.ini", QSettings::IniFormat);
+    //将读取到的ini文件保存在QString中，先取值，然后通过toString()函数转换成QString类型
+    rtspUrl = configIniRead->value("/rtsp/url").toString();
+    videoPath = configIniRead->value("/video/path").toString();
+    //读入入完成后删除指针
+    delete configIniRead;
+
+    mPlayer = new VideoPlayer(rtspUrl);
     connect(mPlayer,SIGNAL(sig_GetOneFrame(QImage)),this,SLOT(slotGetOneFrame(QImage)));
 
     connect(ui->Open_red,&QAction::triggered,this,&MainWindow::slotOpenRed);

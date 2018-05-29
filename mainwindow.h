@@ -43,6 +43,9 @@ private:
     bool open_red=false;
     void keyPressEvent(QKeyEvent *event);
 
+    QString rtspUrl;
+    QString videoPath;
+
 private slots:
     void slotGetOneFrame(QImage img);
     void slotGetRFrame(QImage img);

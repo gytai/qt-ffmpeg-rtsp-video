@@ -13,7 +13,7 @@ class VideoPlayer : public QThread
     Q_OBJECT
 
 public:
-    explicit VideoPlayer();
+    explicit VideoPlayer(QString url);
     ~VideoPlayer();
 
     void startPlay();
@@ -27,6 +27,7 @@ protected:
 
 private:
     QString mFileName;
+    QString rtspUrl;
 
     //2017.8.10---lizhen
     VlcInstance *_instance;

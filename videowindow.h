@@ -31,7 +31,7 @@ private:
     QImage R_mImage;
 
     QString url;
-
+    QString videoPath;
 
     void keyPressEvent(QKeyEvent *event);
 
